@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Datasets and generated experiment outputs are kept local.
+data/*
+!data/.gitignore
+!data/README.md
+results_archive/
+
+# Local OS, editor, and report artifacts.
+.DS_Store
+*.docx
+~$*

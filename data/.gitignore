@@ -1,0 +1,7 @@
+# Keep the lightweight directory scaffold, but not downloaded datasets or logs.
+*/raw/*
+*/processed/*
+logs/*
+!*/raw/.gitkeep
+!*/processed/.gitkeep
+!logs/.gitkeep

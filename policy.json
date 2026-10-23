@@ -1,0 +1,92 @@
+{
+  "allow_cross_modality_thresholds": false,
+  "checks": [
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": true,
+      "name": "blur",
+      "rationale": "Laplacian variance reached AUROC 1.000 on gaussian_blur in Stage 2. Note it is confounded upward by noise, which is why the composite score below does not rely on it alone.",
+      "reject_fpr": 0.01,
+      "score_column": "laplacian_variance"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": false,
+      "name": "noise",
+      "rationale": "Noise estimate reached AUROC 0.999 on gaussian_noise in Stage 2.",
+      "reject_fpr": 0.01,
+      "score_column": "noise_estimate"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": true,
+      "name": "contrast",
+      "rationale": "Michelson contrast reached AUROC 0.971 on contrast_reduction.",
+      "reject_fpr": 0.01,
+      "score_column": "michelson_contrast"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": false,
+      "name": "brightness",
+      "rationale": "Absolute deviation from a clean-image reference brightness. Raw mean intensity cannot be used because the injected offset is randomly signed.",
+      "reject_fpr": 0.01,
+      "score_column": "brightness_deviation"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": false,
+      "name": "compression",
+      "rationale": "BRISQUE reached AUROC 0.976 on jpeg_compression, transferring to radiography better than its natural-scene-statistics basis predicts.",
+      "reject_fpr": 0.01,
+      "score_column": "brisque"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": false,
+      "name": "motion_blur",
+      "rationale": "BRISQUE reached AUROC 0.982 on motion_blur in Stage 2.",
+      "reject_fpr": 0.01,
+      "score_column": "brisque"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": true,
+      "name": "occlusion",
+      "rationale": "CLIP-IQA was the only scorer above chance on occlusion_patch (0.779). Every pixel-statistics metric was at or below chance, so this check is expected to be the weakest of the set.",
+      "reject_fpr": 0.01,
+      "score_column": "clip_iqa"
+    },
+    {
+      "enabled": true,
+      "flag_fpr": 0.05,
+      "higher_is_better": true,
+      "name": "rotation",
+      "rationale": "Binary detection only. Rotation severity is not ordinal under SSIM (Sampat et al. 2009), so no severity is inferred for this check.",
+      "reject_fpr": 0.01,
+      "score_column": "laplacian_variance"
+    }
+  ],
+  "duplicate_decision": "flag",
+  "enable_duplicate_check": true,
+  "enable_resolution_check": true,
+  "fpr_policy": "composite_only",
+  "overall_check": {
+    "enabled": true,
+    "flag_fpr": 0.05,
+    "higher_is_better": false,
+    "name": "overall_quality",
+    "rationale": "Logistic fusion of all IQA metrics and embedding detectors. On ChestX-ray14 this reached AUROC 0.915 against 0.817 for the best single scorer (paired bootstrap difference +0.098, 95% CI [+0.072, +0.122]).",
+    "reject_fpr": 0.01,
+    "score_column": "fused_logistic"
+  },
+  "resolution_decision": "flag",
+  "seed": 42
+}
